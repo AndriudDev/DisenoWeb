@@ -1,33 +1,61 @@
-<div class="container mt-4">
-  <h1 class="mb-4">Pacientes</h1>
-  <a href="/pacientes/create" class="btn btn-primary mb-3">+ Nuevo Paciente</a>
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-end mb-4">
+    <div>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-1">
+          <li class="breadcrumb-item small"><a href="/" class="text-decoration-none text-muted">Inicio</a></li>
+          <li class="breadcrumb-item small active" aria-current="page">Pacientes</li>
+        </ol>
+      </nav>
+      <h1 class="fw-bold mb-0 text-dark"><i class="bi bi-people-fill text-primary"></i> Directorio de Pacientes</h1>
+    </div>
+    <a href="/pacientes/create" class="btn btn-primary rounded-pill px-4 shadow-sm">
+      <i class="bi bi-plus-lg"></i> <span class="d-none d-sm-inline">Registrar Paciente</span>
+    </a>
+  </div>
 
-  {{#if pacientes}}
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Email</th>
-          <th>Membresia</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each pacientes}}
-          <tr>
-            <td>{{firstName}}</td>
-            <td>{{lastName}}</td>
-            <td>{{email}}</td>
-            <td>{{membershipType}}</td>
-            <td>
-              <a href="/pacientes/{{id}}" class="btn btn-sm btn-outline-secondary">Ver</a>
-            </td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  {{else}}
-    <p class="text-muted">No hay pacientes todavía.</p>
-  {{/if}}
+  <div class="card shadow border-0 rounded-3">
+    <div class="card-body p-0">
+      {{#if pacientes}}
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="bg-light">
+              <tr class="text-uppercase text-muted small fw-bold">
+                <th class="ps-4 py-3">Paciente</th>
+                <th class="py-3">Correo Electrónico</th>
+                <th class="py-3">Tipo Membresía</th>
+                <th class="text-end pe-4 py-3">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each pacientes}}
+                <tr>
+                  <td class="ps-4">
+                    <div class="d-flex align-items-center">
+                      <div class="avatar-circle bg-primary bg-opacity-10 text-primary fw-bold rounded-circle me-3 d-flex justify-content-center align-items-center" style="width: 38px; height: 38px; font-size: 0.8rem;">
+                        {{firstName.[0]}}{{lastName.[0]}}
+                      </div>
+                      <div class="fw-semibold text-dark">{{firstName}} {{lastName}}</div>
+                    </div>
+                  </td>
+                  <td class="text-muted">{{email}}</td>
+                  <td>
+                    <span class="badge rounded-pill bg-info bg-opacity-10 text-info border border-info px-3">{{membershipType}}</span>
+                  </td>
+                  <td class="text-end pe-4">
+                    <a href="/pacientes/{{id}}" class="btn btn-sm btn-light border rounded-pill px-3 fw-bold text-primary">Gestionar</a>
+                  </td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      {{else}}
+        <div class="text-center py-5">
+          <i class="bi bi-search text-muted display-1"></i>
+          <p class="mt-3 text-muted">No se encontraron pacientes en el sistema.</p>
+        </div>
+      {{/if}}
+    </div>
+  </div>
 </div>

@@ -1,31 +1,41 @@
 <div class="container mt-4">
-  <a href="/pacientes/{{paciente.id}}" class="btn btn-outline-secondary btn-sm mb-3">← Volver al detalle</a>
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <a href="/pacientes/{{paciente.id}}" class="btn btn-link link-secondary text-decoration-none mb-3 p-0">← Volver al detalle</a>
 
-  <h1 class="mb-4">Editar: {{paciente.firstName}} {{paciente.lastName}}</h1>
-
-  <form action="/pacientes/{{paciente.id}}/edit" method="POST" class="card card-body">
-    <div class="mb-3">
-      <label for="firstName" class="form-label">Nombre:</label>
-      <input type="text" id="firstName" name="firstName" class="form-control" value="{{paciente.firstName}}" required>
+      <div class="card shadow border-0">
+        <div class="card-header bg-white py-3 border-bottom-0">
+          <h1 class="h4 mb-0 text-warning text-dark">Actualizar Afiliado: <span class="text-muted">{{paciente.firstName}}</span></h1>
+        </div>
+        <div class="card-body p-4">
+          <form action="/pacientes/{{paciente.id}}/edit" method="POST">
+            <div class="mb-3">
+              <label for="firstName" class="form-label fw-bold">Nombre</label>
+              <input type="text" id="firstName" name="firstName" class="form-control" value="{{paciente.firstName}}" required>
+            </div>
+            <div class="mb-3">
+              <label for="lastName" class="form-label fw-bold">Apellido</label>
+              <input type="text" id="lastName" name="lastName" class="form-control" value="{{paciente.lastName}}">
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label fw-bold">Email</label>
+              <input type="email" id="email" name="email" class="form-control" value="{{paciente.email}}" required>
+            </div>
+            <div class="mb-4">
+              <label for="membershipType" class="form-label fw-bold">Membresía</label>
+              <select id="membershipType" name="membershipType" class="form-select" required>
+                <option value="{{paciente.membershipType}}" selected>{{paciente.membershipType}} (Actual)</option>
+                <option value="Silver">Silver</option>
+                <option value="Gold">Gold</option>
+                <option value="Platinum">Platinum</option>
+              </select>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-lg fs-6 fw-bold">Guardar Cambios</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="mb-3">
-      <label for="lastName" class="form-label">Apellido:</label>
-      <input type="text" id="lastName" name="lastName" class="form-control" value="{{paciente.lastName}}">
-    </div>
-    <div class="mb-3">
-      <label for="email" class="form-label">Email:</label>
-      <input type="email" id="email" name="email" class="form-control" value="{{paciente.email}}" required>
-    </div>
-    <div class="mb-3">
-      <label for="membershipType" class="form-label">Membresia:</label>
-      <select id="membershipType" name="membershipType" class="form-select" required>
-        {{!-- <option value="" disabled selected>Seleccione una membresía</option> --}}
-        <option value="{{paciente.membershipType}}" >{{paciente.membershipType}} </option>
-        <option value="Silver">Silver</option>
-        <option value="Gold">Gold</option>
-        <option value="Platinum">Platinum</option>
-      </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Guardar cambios</button>
-  </form>
+  </div>
 </div>

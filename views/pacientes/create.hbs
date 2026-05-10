@@ -1,30 +1,41 @@
 <div class="container mt-4">
-  <a href="/pacientes" class="btn btn-outline-secondary btn-sm mb-3">← Volver al listado</a>
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <a href="/pacientes" class="btn btn-link link-secondary text-decoration-none mb-3 p-0">← Volver al listado</a>
 
-  <h1 class="mb-4">Nuevo Paciente</h1>
-
-  <form action="/pacientes" method="POST" class="card card-body">
-    <div class="mb-3">
-      <label for="firstName" class="form-label">Nombre:</label>
-      <input type="text" id="firstName" name="firstName" class="form-control" required>
+      <div class="card shadow border-0">
+        <div class="card-header bg-white py-3">
+          <h1 class="h4 mb-0 text-primary">Registrar Nuevo Afiliado</h1>
+        </div>
+        <div class="card-body p-4">
+          <form action="/pacientes" method="POST">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="firstName" class="form-label fw-bold">Nombre</label>
+                <input type="text" id="firstName" name="firstName" class="form-control px-3 py-2" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="lastName" class="form-label fw-bold">Apellido</label>
+                <input type="text" id="lastName" name="lastName" class="form-control px-3 py-2" required>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label fw-bold">Correo Electrónico</label>
+              <input type="email" id="email" name="email" class="form-control px-3 py-2" placeholder="ejemplo@correo.com" required>
+            </div>
+            <div class="mb-4">
+              <label for="membershipType" class="form-label fw-bold">Tipo de Membresía</label>
+              <select id="membershipType" name="membershipType" class="form-select px-3 py-2" required>
+                <option value="" disabled selected>Seleccione una membresía</option>
+                <option value="Silver">Silver (5% Desc.)</option>
+                <option value="Gold">Gold (10% Desc.)</option>
+                <option value="Platinum">Platinum (20% Desc.)</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-bold shadow-sm">Crear Paciente</button>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="mb-3">
-      <label for="lastName" class="form-label">Apellido:</label>
-      <input type="text" id="lastName" name="lastName" class="form-control" required>
-    </div>
-    <div class="mb-3">
-      <label for="email" class="form-label">Email:</label>
-      <input type="email" id="email" name="email" class="form-control" required>
-    </div>
-    <div class="mb-3">
-      <label for="membershipType" class="form-label">Membresia:</label>
-      <select id="membershipType" name="membershipType" class="form-select" required>
-        <option value="" disabled selected>Seleccione una membresía</option>
-        <option value="Silver">Silver</option>
-        <option value="Gold">Gold</option>
-        <option value="Platinum">Platinum</option>
-      </select>
-    </div>
-    <button type="submit" class="btn btn-primary">Crear Paciente</button>
-  </form>
+  </div>
 </div>
