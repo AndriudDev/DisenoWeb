@@ -18,7 +18,6 @@ app.set('views', viewsPath)
 app.use(express.urlencoded({ extended: true }))
 
 app.get('/', (_req, res) => res.render('home'))
-
 app.use('/pacientes', pacienteRouter)
 
 export default app
