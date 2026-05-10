@@ -52,7 +52,7 @@ npx prisma migrate dev --name init
 ```
 
 ### 5. Generate
-Genera base de datos
+Generar el Cliente de Prisma
 ```bash
 npx prisma generate
 ```
