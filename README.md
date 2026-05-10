@@ -51,7 +51,13 @@ Ejecuta las migraciones de Prisma para generar las tablas y el cliente:
 npx prisma migrate dev --name init
 ```
 
-### 5. Datos de Prueba (Seed)
+### 5. Generate
+Genera base de datos
+```bash
+npx prisma generate
+```
+
+### 6. Datos de Prueba (Seed)
 Poblar la base de datos con registros de ejemplo para desarrollo:
 ```bash
 yarn seed

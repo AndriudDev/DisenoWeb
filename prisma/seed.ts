@@ -6,12 +6,12 @@ const adapter = new PrismaLibSql({ url: process.env.DATABASE_URL ?? 'file:./dev.
 const prisma = new PrismaClient({ adapter })
 
 const pacientes = [
-  { firstName: 'John', lastName: 'Doe', precio: 80000, email: 'john.doe@example.com', membershipType: 'Basic' },
-  { firstName: 'Jane', lastName: 'Smith', precio: 80000, email: 'jane.smith@example.com', membershipType: 'Premium' },
-  { firstName: 'Alice', lastName: 'Johnson', precio: 80000, email: 'alice.johnson@example.com', membershipType: 'Gold' },
-  { firstName: 'Bob', lastName: 'Brown', precio: 80000, email: 'bob.brown@example.com', membershipType: 'Silver' },
-  { firstName: 'Charlie', lastName: 'Davis', precio: 80000, email: 'charlie.davis@example.com', membershipType: 'Basic' },
-  { firstName: 'Eve', lastName: 'Miller', precio: 80000, email: 'eve.miller@example.com', membershipType: 'Premium' },
+  { firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com', membershipType: 'Gold' },
+  { firstName: 'Jane', lastName: 'Smith', email: 'jane.smith@example.com', membershipType: 'Gold' },
+  { firstName: 'Alice', lastName: 'Johnson', email: 'alice.johnson@example.com', membershipType: 'Silver' },
+  { firstName: 'Bob', lastName: 'Brown', email: 'bob.brown@example.com', membershipType: 'Silver' },
+  { firstName: 'Charlie', lastName: 'Davis', email: 'charlie.davis@example.com', membershipType: 'Platinum' },
+  { firstName: 'Eve', lastName: 'Miller', email: 'eve.miller@example.com', membershipType: 'Platinum' },
 
   /* { name: 'Pro Laptop', price: 999990, description: 'High-performance laptop with 32GB RAM and 1TB SSD.' },
   { name: 'Wireless Mouse', price: 29990, description: 'Ergonomic wireless mouse with adjustable DPI.' },
