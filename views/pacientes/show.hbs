@@ -27,14 +27,22 @@
           <h5 class="card-title mb-0 text-success fw-bold">Simulador de presupuesto</h5>
         </div>
         <div class="card-body bg-light">
-          <div class="mb-4">
-            <label for="montoTratamiento" class="form-label fw-bold">Costo del tratamiento</label>
-            <div class="input-group input-group-lg">
-              <span class="input-group-text">$</span>
-              <input type="number" id="montoTratamiento" class="form-control" placeholder="0">
+          <form action="/pacientes/{{paciente.id}}/simular" method="POST">
+            <div class="mb-4">
+              <label for="montoTratamiento" class="form-label fw-bold">Costo del tratamiento</label>
+              <div class="input-group input-group-lg">
+                <span class="input-group-text">$</span>
+                <input type="text" id="montoTratamiento" name="montoTratamiento" class="form-control px-3 py-2 {{#if errors.montoTratamiento}} is-invalid{{/if}}" placeholder="0" inputmode="decimal" value="{{montoTratamiento}}">
+              </div>
+              {{#if errors.montoTratamiento}}
+                <div class="text-danger mt-1 small">{{errors.montoTratamiento}}</div>
+              {{/if}}
+              <div class="form-text mt-2">Ingrese el valor total para calcular el beneficio del paciente.</div>
             </div>
-            <div class="form-text mt-2">Ingrese el valor total para calcular el beneficio del paciente.</div>
-          </div>
+            <div class="d-grid mb-4">
+              <button type="submit" class="btn btn-success btn-lg fw-bold">Calcular</button>
+            </div>
+          </form>
 
           <div class="p-4 bg-white rounded shadow-sm">
             <div class="d-flex justify-content-between align-items-center mb-2">
@@ -44,7 +52,7 @@
             <hr class="text-muted opacity-25">
             <div class="d-flex justify-content-between align-items-center mt-3">
               <h4 class="mb-0 fw-bold">Total a pagar:</h4>
-              <h4 class="text-primary mb-0 fw-bold" id="resultado">$0</h4>
+              <h4 class="text-primary mb-0 fw-bold" id="resultado">{{#if totalCalculado}}{{totalCalculado}}{{else}}$0{{/if}}</h4>
             </div>
           </div>
         </div>
@@ -52,20 +60,3 @@
     </div>
   </div>
 </div>
-
-<script>
-  const inputMonto = document.getElementById('montoTratamiento');
-  const spanResultado = document.getElementById('resultado');
-  const porcentaje = parseFloat(document.getElementById('badgeDescuento').dataset.porcentaje);
-
-  inputMonto.addEventListener('input', () => {
-    const monto = parseFloat(inputMonto.value) || 0;
-    const calculo = monto - (monto * (porcentaje / 100));
-    
-    // Formatear a moneda (ej: $72.000)
-    spanResultado.innerText = new Intl.NumberFormat('es-CL', {
-      style: 'currency',
-      currency: 'CLP'
-    }).format(calculo);
-  });
-</script>

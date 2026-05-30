@@ -12,25 +12,37 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName" class="form-label fw-bold">Nombre</label>
-                <input type="text" id="firstName" name="firstName" class="form-control px-3 py-2" required>
+                <input type="text" id="firstName" name="firstName" class="form-control px-3 py-2 {{#if errors.firstName}} is-invalid{{/if}}" value="{{paciente.firstName}}">
+                {{#if errors.firstName}}
+                  <div class="text-danger mt-1 small">{{errors.firstName}}</div>
+                {{/if}}
               </div>
               <div class="col-md-6 mb-3">
                 <label for="lastName" class="form-label fw-bold">Apellido</label>
-                <input type="text" id="lastName" name="lastName" class="form-control px-3 py-2" required>
+                <input type="text" id="lastName" name="lastName" class="form-control px-3 py-2 {{#if errors.lastName}} is-invalid{{/if}}" value="{{paciente.lastName}}">
+                {{#if errors.lastName}}
+                  <div class="text-danger mt-1 small">{{errors.lastName}}</div>
+                {{/if}}
               </div>
             </div>
             <div class="mb-3">
               <label for="email" class="form-label fw-bold">Correo Electrónico</label>
-              <input type="email" id="email" name="email" class="form-control px-3 py-2" placeholder="ejemplo@correo.com" required>
+              <input type="email" id="email" name="email" class="form-control px-3 py-2 {{#if errors.email}} is-invalid{{/if}}" placeholder="ejemplo@correo.com" value="{{paciente.email}}">
+              {{#if errors.email}}
+                <div class="text-danger mt-1 small">{{errors.email}}</div>
+              {{/if}} 
             </div>
             <div class="mb-4">
               <label for="membershipType" class="form-label fw-bold">Tipo de Membresía</label>
-              <select id="membershipType" name="membershipType" class="form-select px-3 py-2" required>
-                <option value="" disabled selected>Seleccione una membresía</option>
-                <option value="Silver">Silver (5% Desc.)</option>
-                <option value="Gold">Gold (10% Desc.)</option>
-                <option value="Platinum">Platinum (20% Desc.)</option>
+              <select id="membershipType" name="membershipType" class="form-select px-3 py-2 {{#if errors.membershipType}} is-invalid{{/if}}" >
+                <option value="" disabled {{#unless paciente.membershipType}}selected{{/unless}}>Seleccione una membresía</option>
+                <option value="Silver" {{#if (eq paciente.membershipType "Silver")}}selected{{/if}}>Silver (5% Desc.)</option>
+                <option value="Gold" {{#if (eq paciente.membershipType "Gold")}}selected{{/if}}>Gold (10% Desc.)</option>
+                <option value="Platinum" {{#if (eq paciente.membershipType "Platinum")}}selected{{/if}}>Platinum (20% Desc.)</option>
               </select>
+              {{#if errors.membershipType}}
+                <div class="text-danger mt-1 small">{{errors.membershipType}}</div>
+              {{/if}}
             </div>
             <button type="submit" class="btn btn-primary w-100 py-2 fw-bold shadow-sm">Crear Paciente</button>
           </form>

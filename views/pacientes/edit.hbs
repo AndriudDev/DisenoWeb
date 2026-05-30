@@ -8,27 +8,41 @@
           <h1 class="h4 mb-0 text-warning text-dark">Actualizar Afiliado: <span class="text-muted">{{paciente.firstName}}</span></h1>
         </div>
         <div class="card-body p-4">
-          <form action="/pacientes/{{paciente.id}}/edit" method="POST">
-            <div class="mb-3">
-              <label for="firstName" class="form-label fw-bold">Nombre</label>
-              <input type="text" id="firstName" name="firstName" class="form-control" value="{{paciente.firstName}}" required>
-            </div>
-            <div class="mb-3">
-              <label for="lastName" class="form-label fw-bold">Apellido</label>
-              <input type="text" id="lastName" name="lastName" class="form-control" value="{{paciente.lastName}}">
+          <form action="/pacientes/{{paciente.id}}/edit" method="POST" novalidate>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="firstName" class="form-label fw-bold">Nombre</label>
+                <input type="text" id="firstName" name="firstName" class="form-control px-3 py-2 {{#if errors.firstName}} is-invalid{{/if}}" value="{{paciente.firstName}}" >
+                {{#if errors.firstName}}
+                  <div class="text-danger mt-1 small">{{errors.firstName}}</div>
+                {{/if}}
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="lastName" class="form-label fw-bold">Apellido</label>
+                <input type="text" id="lastName" name="lastName" class="form-control px-3 py-2 {{#if errors.lastName}} is-invalid{{/if}}" value="{{paciente.lastName}}">
+                {{#if errors.lastName}}
+                  <div class="text-danger mt-1 small">{{errors.lastName}}</div>
+                {{/if}}
+              </div>
             </div>
             <div class="mb-3">
               <label for="email" class="form-label fw-bold">Email</label>
-              <input type="email" id="email" name="email" class="form-control" value="{{paciente.email}}" required>
+              <input type="email" id="email" name="email" class="form-control px-3 py-2 {{#if errors.email}} is-invalid{{/if}}" value="{{paciente.email}}" >
+              {{#if errors.email}}
+                <div class="text-danger mt-1 small">{{errors.email}}</div>
+              {{/if}}
             </div>
             <div class="mb-4">
               <label for="membershipType" class="form-label fw-bold">Membresía</label>
-              <select id="membershipType" name="membershipType" class="form-select" required>
-                <option value="{{paciente.membershipType}}" selected>{{paciente.membershipType}} (Actual)</option>
-                <option value="Silver">Silver</option>
-                <option value="Gold">Gold</option>
-                <option value="Platinum">Platinum</option>
+              <select id="membershipType" name="membershipType" class="form-select px-3 py-2 {{#if errors.membershipType}} is-invalid{{/if}}" >
+                <option value="" disabled {{#unless paciente.membershipType}}selected{{/unless}}>Seleccione una membresía</option>
+                <option value="Silver" {{#if (eq paciente.membershipType "Silver")}}selected{{/if}}>Silver</option>
+                <option value="Gold" {{#if (eq paciente.membershipType "Gold")}}selected{{/if}}>Gold</option>
+                <option value="Platinum" {{#if (eq paciente.membershipType "Platinum")}}selected{{/if}}>Platinum</option>
               </select>
+              {{#if errors.membershipType}}
+                <div class="text-danger mt-1 small">{{errors.membershipType}}</div>
+              {{/if}}
             </div>
             <div class="d-grid">
               <button type="submit" class="btn btn-primary btn-lg fs-6 fw-bold">Guardar Cambios</button>
