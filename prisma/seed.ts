@@ -5,31 +5,28 @@ import { PrismaClient } from '../src/generated/prisma/client'
 const adapter = new PrismaLibSql({ url: process.env.DATABASE_URL ?? 'file:./dev.db' })
 const prisma = new PrismaClient({ adapter })
 
-const pacientes = [
-  { firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com', membershipType: 'Gold' },
-  { firstName: 'Jane', lastName: 'Smith', email: 'jane.smith@example.com', membershipType: 'Gold' },
-  { firstName: 'Alice', lastName: 'Johnson', email: 'alice.johnson@example.com', membershipType: 'Silver' },
-  { firstName: 'Bob', lastName: 'Brown', email: 'bob.brown@example.com', membershipType: 'Silver' },
-  { firstName: 'Charlie', lastName: 'Davis', email: 'charlie.davis@example.com', membershipType: 'Platinum' },
-  { firstName: 'Eve', lastName: 'Miller', email: 'eve.miller@example.com', membershipType: 'Platinum' },
-
-  /* { name: 'Pro Laptop', price: 999990, description: 'High-performance laptop with 32GB RAM and 1TB SSD.' },
-  { name: 'Wireless Mouse', price: 29990, description: 'Ergonomic wireless mouse with adjustable DPI.' },
-  { name: 'Mechanical Keyboard', price: 79990, description: 'Mechanical keyboard with blue switches and RGB.' },
-  { name: 'Monitor 27" 4K', price: 349990, description: '27-inch 4K UHD monitor with HDR support.' },
-  { name: 'USB-C Hub', price: 45990, description: '7-in-1 USB-C hub with HDMI, SD card and USB 3.0.' },
-  { name: 'Webcam HD', price: 59990, description: '1080p webcam with built-in microphone and privacy shutter.' },
-  { name: 'Noise Canceling Headphones', price: 149990, description: 'Over-ear Bluetooth headphones with active noise cancellation.' },
-  { name: 'Desk Lamp LED', price: 39990, description: 'Adjustable LED desk lamp with 5 brightness levels.' }, */
-]
-
 async function main() {
   console.log('Seeding database...')
+
+  const users = await Promise.all([
+    prisma.user.create({ data: { email: 'user1@example.com', password: 'password1' } }),
+    prisma.user.create({ data: { email: 'user2@example.com', password: 'password2' } }),
+    prisma.user.create({ data: { email: 'user3@example.com', password: 'password3' } }),
+  ])
+
+  const pacientes = [
+    { firstName: 'John', lastName: 'Doe', email: 'john.doe@example.com', membershipType: 'Gold', userId: users[0].id },
+    { firstName: 'Jane', lastName: 'Smith', email: 'jane.smith@example.com', membershipType: 'Gold', userId: users[0].id },
+    { firstName: 'Alice', lastName: 'Johnson', email: 'alice.johnson@example.com', membershipType: 'Silver', userId: users[1].id },
+    { firstName: 'Bob', lastName: 'Brown', email: 'bob.brown@example.com', membershipType: 'Silver', userId: users[1].id },
+    { firstName: 'Charlie', lastName: 'Davis', email: 'charlie.davis@example.com', membershipType: 'Platinum', userId: users[2].id },
+    { firstName: 'Eve', lastName: 'Miller', email: 'eve.miller@example.com', membershipType: 'Platinum', userId: users[2].id },
+  ]
 
   await prisma.paciente.createMany({ data: pacientes })
 
   const count = await prisma.paciente.count()
-  console.log(`Inserted ${count} pacientes.`)
+  console.log(`Inserted ${count} products.`)
 }
 
 main()

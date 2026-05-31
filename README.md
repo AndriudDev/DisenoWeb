@@ -63,6 +63,10 @@ Poblar la base de datos con registros de ejemplo para desarrollo:
 yarn seed
 ```
 
+### 7. Dependencia bcrypt
+mantiene secion y bcryt es para hashear contraseña
+```bash
+yarn add express-session bcrypt
 ---
 
 ## 💻 Ejecución

@@ -7,7 +7,7 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["node"]
+    "types": ["node", "express", "express-session"]
   },
   "include": ["src/**/*", "prisma/**/*.ts"],
   "exclude": ["node_modules", "dist"]

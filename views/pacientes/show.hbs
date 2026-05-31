@@ -1,5 +1,5 @@
 <div class="container mt-4">
-  <a href="/pacientes" class="btn btn-link link-secondary text-decoration-none mb-3 p-0">← Volver al listado</a>
+  <a href="/affiliates" class="btn btn-link link-secondary text-decoration-none mb-3 p-0">← Volver al listado</a>
 
   <div class="row">
     <div class="col-md-5">
@@ -13,8 +13,8 @@
       </div>
 
       <div class="d-flex gap-2 mb-4">
-        <a href="/pacientes/{{paciente.id}}/edit" class="btn btn-warning px-4 shadow-sm fw-bold">Editar Perfil</a>
-        <form action="/pacientes/{{paciente.id}}/delete" method="POST" onsubmit="return confirm('¿Está seguro de eliminar este registro?')">
+        <a href="/affiliates/{{paciente.id}}/edit" class="btn btn-warning px-4 shadow-sm fw-bold">Editar Perfil</a>
+        <form action="/affiliates/{{paciente.id}}/delete" method="POST" onsubmit="return confirm('¿Está seguro de eliminar este registro?')">
           <button type="submit" class="btn btn-outline-danger px-4 fw-bold">Eliminar</button>
         </form>
       </div>
@@ -27,7 +27,7 @@
           <h5 class="card-title mb-0 text-success fw-bold">Simulador de presupuesto</h5>
         </div>
         <div class="card-body bg-light">
-          <form action="/pacientes/{{paciente.id}}/simular" method="POST">
+          <form action="/affiliates/{{paciente.id}}/simular" method="POST">
             <div class="mb-4">
               <label for="montoTratamiento" class="form-label fw-bold">Costo del tratamiento</label>
               <div class="input-group input-group-lg">

@@ -4,12 +4,12 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb mb-1">
           <li class="breadcrumb-item small"><a href="/" class="text-decoration-none text-muted">Inicio</a></li>
-          <li class="breadcrumb-item small active" aria-current="page">Pacientes</li>
+          <li class="breadcrumb-item small active" aria-current="page">Afiliados</li>
         </ol>
       </nav>
-      <h1 class="fw-bold mb-0 text-dark"><i class="bi bi-people-fill text-primary"></i> Directorio de Pacientes</h1>
+      <h1 class="fw-bold mb-0 text-dark"><i class="bi bi-people-fill text-primary"></i> Directorio de Afiliados</h1>
     </div>
-    <a href="/pacientes/create" class="btn btn-primary rounded-pill px-4 shadow-sm">
+    <a href="/affiliates/create" class="btn btn-primary rounded-pill px-4 shadow-sm">
       <i class="bi bi-plus-lg"></i> <span class="d-none d-sm-inline">Registrar Paciente</span>
     </a>
   </div>
@@ -43,7 +43,7 @@
                     <span class="badge rounded-pill bg-info bg-opacity-10 text-info border border-info px-3">{{membershipType}}</span>
                   </td>
                   <td class="text-end pe-4">
-                    <a href="/pacientes/{{id}}" class="btn btn-sm btn-light border rounded-pill px-3 fw-bold text-primary">Gestionar</a>
+                    <a href="/affiliates/{{id}}" class="btn btn-sm btn-light border rounded-pill px-3 fw-bold text-primary">Gestionar</a>
                   </td>
                 </tr>
               {{/each}}

@@ -1,7 +1,10 @@
 import express from 'express'
+import session from 'express-session'
 import path from 'path'
 import { engine } from 'express-handlebars'
 import pacienteRouter from './routes/paciente.routes'
+import { requireAuth } from './middleware/requireAuth'
+import authRouter from './routes/auth.routes'
 
 const app = express()
 
@@ -20,7 +23,26 @@ app.set('views', viewsPath)
 
 app.use(express.urlencoded({ extended: true }))
 
+app.use(session({
+  secret: process.env.SESSION_SECRET ?? 'dev-secret',
+  resave: false,
+  saveUninitialized: false,
+}))
+
+app.use((req, _res, next) => {
+  _res.locals.session = req.session
+  next( )
+})
+
 app.get('/', (_req, res) => res.render('home'))
-app.use('/pacientes', pacienteRouter)
+app.use('/login', authRouter)
+app.use('/affiliates', requireAuth, pacienteRouter)
+
+app.use((req, res) => {
+  res.status(404).render('404', { message: `La página ${req.originalUrl} no existe.` })
+})
+
+//app.get('/', (_req, res) => res.render('home'))
+//app.use('/pacientes', pacienteRouter)
 
 export default app

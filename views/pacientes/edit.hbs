@@ -1,14 +1,14 @@
 <div class="container mt-4">
   <div class="row justify-content-center">
     <div class="col-md-8 col-lg-6">
-      <a href="/pacientes/{{paciente.id}}" class="btn btn-link link-secondary text-decoration-none mb-3 p-0">← Volver al detalle</a>
+      <a href="/affiliates/{{paciente.id}}" class="btn btn-link link-secondary text-decoration-none mb-3 p-0">← Volver al detalle</a>
 
       <div class="card shadow border-0">
         <div class="card-header bg-white py-3 border-bottom-0">
           <h1 class="h4 mb-0 text-warning text-dark">Actualizar Afiliado: <span class="text-muted">{{paciente.firstName}}</span></h1>
         </div>
         <div class="card-body p-4">
-          <form action="/pacientes/{{paciente.id}}/edit" method="POST" novalidate>
+          <form action="/affiliates/{{paciente.id}}/edit" method="POST" novalidate>
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName" class="form-label fw-bold">Nombre</label>
