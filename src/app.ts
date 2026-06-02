@@ -8,7 +8,10 @@ import authRouter from './routes/auth.routes'
 
 const app = express()
 
-const viewsPath = path.join(__dirname, '..', 'views')
+// Ruta compatible con ambos contextos (desarrollo y Docker)
+const viewsPath = process.env.NODE_ENV === 'production' 
+  ? path.join('/app', 'views')
+  : path.join(__dirname, '..', 'views')
 
 app.engine('hbs', engine({
   extname: '.hbs',

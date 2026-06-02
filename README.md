@@ -45,7 +45,7 @@ Para usar Docker:
 
 ### 1. Clonar el repositorio
 ```bash
-git clone https://github.com/tu-usuario/Prueba3.git
+git clone https://github.com/AndriudDev/DisenoWeb.git
 cd Prueba3
 ```
 
@@ -86,7 +86,7 @@ Abre la app en: `http://localhost:3000`
 
 ### 1. Clonar el repositorio
 ```bash
-git clone https://github.com/tu-usuario/Prueba3.git
+git clone https://github.com/AndriudDev/DisenoWeb.git
 cd Prueba3
 ```
 

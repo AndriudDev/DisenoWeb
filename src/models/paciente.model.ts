@@ -1,5 +1,5 @@
 import prisma from '../lib/prisma'
-import type { Prisma } from '../generated/prisma/client'
+import type { Prisma } from '../../generated/prisma/client'
 
 export const getAll = async (userId: number) => {
   return await prisma.paciente.findMany({ where: { userId } })
