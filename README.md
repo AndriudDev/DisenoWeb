@@ -1,181 +1,115 @@
 # 🏥 Sistema de Gestión de Afiliados
 
-Aplicación para gestionar pacientes afiliados usando **Express + TypeScript + Prisma**. Incluye autenticación, CRUD de afiliados y simulación de presupuestos.
+Aplicación para gestionar pacientes afiliados usando **Express + TypeScript + Prisma**. Incluye autenticación, CRUD de afiliados y vistas Handlebars. Preparada para ejecución local y en Docker.
 
 ---
 
-## ✨ Características Principales
+## ✨ Resumen rápido
 
-- **Autenticación** con sesión y usuarios.
-- **CRUD de afiliados** con vistas Handlebars.
-- **Validación** usando Zod.
-- **Base de datos** con Prisma y PostgreSQL.
-- **Rutas protegidas** para usuarios autenticados.
-- **Bootstrap 5** para diseño responsivo.
-
-## 🚀 Tecnologías Utilizadas
-
-- Node.js + Express
-- TypeScript
-- Prisma ORM
-- PostgreSQL
-- Handlebars (HBS)
-- express-session
-- bcryptjs
-- Docker / Docker Compose
+- **Arrancar en Docker (reconstruyendo):** `docker compose up --build`
+- **Arrancar en Docker (detached):** `docker compose up -d`
+- **Compilar localmente:** `yarn build`
+- **Generar Prisma client:** `npx prisma generate`
+- **Levantar solo la DB:** `docker compose up -d db`
 
 ---
 
-## 🧩 Requisitos Previos
+## 🧩 Requisitos
 
-Para instalar localmente:
-
-- Node.js 18+
-- Yarn o npm
-- PostgreSQL 14+
-- Git
-
-Para usar Docker:
-
-- Docker Desktop instalado
+- Docker y Docker Compose
+- Node.js 18+ y Yarn (para desarrollo local)
+- PostgreSQL (si ejecutas sin Docker)
 
 ---
 
-## 🛠️ Instalación Local
+## 🛠️ Instalación y uso (local)
 
-### 1. Clonar el repositorio
-```bash
-git clone https://github.com/AndriudDev/DisenoWeb.git
-cd Prueba3
+1. Instalar dependencias:
 ```
-
-### 2. Instalar dependencias
-```bash
 yarn install
 ```
-
-### 3. Configurar variables de entorno
-Crea el archivo `.env` desde el ejemplo:
-```bash
+2. Copiar variables de entorno y editarlas si es necesario:
+```
 cp .env.example .env
 ```
-
-> El archivo `.env.example` ya incluye las credenciales de prueba y la forma correcta de configurar `DATABASE_URL`.
-
-### 4. Ejecutar migraciones y generar Prisma
-```bash
-npx prisma migrate dev --name init
+3. Generar Prisma Client:
+```
 npx prisma generate
 ```
-
-### 5. Cargar datos de prueba
-```bash
-yarn seed
+4. Compilar TypeScript:
+```
+yarn build
+```
+5. Ejecutar localmente:
+```
+node dist/src/index.js
 ```
 
-### 6. Iniciar la aplicación
-```bash
-yarn dev
-```
-
-Abre la app en: `http://localhost:3000`
+Para desarrollo (con recarga) usar `yarn dev`.
 
 ---
 
 ## 🐳 Uso con Docker
 
-### 1. Clonar el repositorio
-```bash
-git clone https://github.com/AndriudDev/DisenoWeb.git
-cd Prueba3
+1. Levantar (reconstruye imágenes cuando es necesario):
 ```
-
-### 2. Levantar con Docker Compose
-```bash
+docker compose up --build
+```
+2. Levantar en segundo plano:
+```
 docker compose up -d
 ```
-
-### 3. Acceder
-```text
-http://localhost:3000
+3. Ver logs del servicio:
+```
+docker compose logs -f app
 ```
 
-> Docker crea la base de datos, ejecuta Prisma y carga el seed automáticamente.
+El `docker-compose.yml` inyecta las variables de entorno en tiempo de ejecución y el `app` ejecuta al inicio `npx prisma db push && yarn seed && node dist/src/index.js` para sincronizar el esquema y cargar datos de prueba.
 
 ---
 
-## 👤 Credenciales de prueba
+## 🔐 Variables de entorno
 
-- Email: `user1@example.com`
-- Contraseña: `123456`
+- `.env.example` contiene ejemplos y debe usarse como plantilla. No subas `.env` al repositorio.
+- Variables principales:
+	- `DATABASE_URL` — URL de conexión PostgreSQL
+	- `SESSION_SECRET` — secreto de sesión
+	- `NODE_ENV` — `development` o `production`
 
-> Si usas Docker, asegúrate de que el contenedor está funcionando y de que el seed se ejecutó correctamente.
-
----
-
-## 🌐 Rutas principales
-
-- `GET /` - Página de inicio
-- `GET /login` - Formulario de login
-- `GET /login/register` - Registro
-- `GET /affiliates` - Lista de afiliados
-- `GET /affiliates/create` - Crear afiliado
+Recomendación: para entornos de producción, inyecta secretos desde el host o gestor de secretos en lugar de ponerlos en `docker-compose.yml`.
 
 ---
 
-## 📁 Estructura del proyecto
+## 📦 Prisma y generated client
 
-```text
-├── src/
-│   ├── controllers/
-│   ├── routes/
-│   ├── models/
-│   ├── middleware/
-│   ├── schemas/
-│   ├── lib/
-│   └── index.ts
-├── views/
-│   ├── layouts/
-│   ├── pacientes/
-│   └── home.hbs
-├── prisma/
-│   ├── schema.prisma
-│   ├── seed.ts
-│   └── migrations/
+- En Prisma 7 la conexión se define en `prisma.config.ts` (usa `process.env["DATABASE_URL"]`). No añadas `url = env("DATABASE_URL")` en `prisma/schema.prisma`.
+- El Prisma Client se genera en `generated/prisma`. El `Dockerfile` copia esa carpeta tanto en `/app/generated` como en `/app/dist/generated` para soportar el `seed.ts` (ejecutado desde la raíz) y el código compilado en `dist`.
+
+---
+
+## 🛠️ Problemas comunes y soluciones
+
+- Error: `The datasource.url property is required ...` — Verifica `prisma.config.ts` y que `DATABASE_URL` esté presente en el entorno.
+- Error: `Cannot find module '../generated/prisma/client'` — Ejecuta `npx prisma generate` y asegúrate de reconstruir la imagen para que `generated` se copie.
+- Error: `Failed to lookup view "home" in views directory "/app/dist/views"` — Rebuild y verifica que la carpeta `views` se copió a la imagen; el proyecto también soporta `/app/views` en producción.
+- Si el contenedor se reinicia o sale con código 137, revisa memoria y logs (`docker compose logs app`), y que no haya procesos que maten los contenedores.
+
+---
+
+## 📁 Estructura relevante
+
+```
+├── src/                # Código TypeScript
+├── views/              # Vistas Handlebars
+├── prisma/             # Esquema y seed
+├── generated/          # Prisma client (generado)
+├── dist/               # Código compilado
 ├── Dockerfile
 ├── docker-compose.yml
-├── .env.example
-└── README.md
+└── .env.example
 ```
 
 ---
 
-## 💻 Comandos útiles
-
-```bash
-# Instalar dependencias
-yarn install
-
-# Migrar y generar Prisma
-npx prisma migrate dev --name init
-npx prisma generate
-
-# Cargar seed
-yarn seed
-
-# Iniciar en desarrollo
-yarn dev
-
-# Levantar con Docker
-docker compose up -d
-```
-
----
-
-## 🆘 Solución de problemas
-
-- Si no puedes iniciar sesión, verifica que el seed haya creado usuarios.
-- Si falta `.env`, crea uno con `cp .env.example .env`.
-- Si la base de datos no existe, ejecuta `npx prisma migrate dev --name init`.
-- Si usas Docker y la app no arranca, revisa `docker compose logs app`.
+Si quieres, puedo añadir una sección con ejemplos de endpoints (curl/Postman) y screenshots. También puedo revertir a un README más corto si prefieres.
 
